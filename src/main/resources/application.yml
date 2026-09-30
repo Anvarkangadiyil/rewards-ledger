@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: rewards-ledger
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:rewards;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;LOCK_TIMEOUT=10000}
+    username: ${DB_USER:sa}
+    password: ${DB_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+
+rewards:
+  default-ttl-days: 365
+  # Sweeps lots whose expiry has passed. Redemptions also expire lazily, so this only keeps balances tidy.
+  expiry-cron: "0 */15 * * * *"
